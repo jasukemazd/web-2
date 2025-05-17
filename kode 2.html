@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jasuke Maz D | Camilan Sehat & Praktis</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff8f0;
+      min-height: 100vh;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #ffa500;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+    .nav-left, .nav-right {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-decoration: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover, nav a.active { background-color: #ff8c00; }
+
+    section {
+      padding: 100px 20px 40px;
+      display: none;
+      background: #fff8f0;
+    }
+    section.active { display: block; }
+
+    header.home-header {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url('https://via.placeholder.com/1200x600?text=Jasuke') center/cover no-repeat;
+      color: white;
+      text-shadow: 2px 2px 6px #000;
+      text-align: center;
+      padding: 0 20px;
+    }
+    header.home-header h1 { font-size: 3rem; margin-bottom: 0.3em; }
+    header.home-header p { font-size: 1.3rem; }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 1000px;
+      margin: auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+    }
+    .profile-img {
+      width: 300px;
+      border-radius: 15px;
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .profile-info {
+      flex: 1;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .product-card {
+      width: 230px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .product-card button {
+      margin-top: auto;
+      padding: 10px;
+      background: #ffa500;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cart { margin-top: 30px; }
+    .cart ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .cart li {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .checkout-btn {
+      background: #ff5722;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    /* Responsive untuk HP */
+    @media (max-width: 768px) {
+      nav { flex-direction: column; align-items: flex-start; }
+      .nav-left, .nav-right { flex-direction: column; width: 100%; gap: 10px; }
+      .product-card { width: 100%; }
+      .profile-container { flex-direction: column; text-align: center; }
+      .profile-img { width: 100%; max-width: 300px; }
+      header.home-header h1 { font-size: 2rem; }
+      header.home-header p { font-size: 1.1rem; }
+      .card { padding: 15px; }
+      section { padding: 80px 15px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
+      <a href="#" class="active" onclick="showSection('home')">Home</a>
+      <a href="#" onclick="showSection('menu')">Menu</a>
+      <a href="#" onclick="showSection('kontak')">Kontak</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" onclick="showSection('profil')">Profil</a>
+    </div>
+  </nav>
+
+  <section id="home" class="active">
+    <header class="home-header">
+      <h1>JASUKE MAZ D</h1>
+      <p>Camilan Sehat, Hangat & Praktis Berbasis Jagung Manis Lokal</p>
+    </header>
+  </section>
+
+  <section id="profil">
+    <div class="card profile-container">
+      <img src="https://via.placeholder.com/300x300?text=Profil" alt="CEO" class="profile-img" />
+      <div class="profile-info">
+        <h2>Profil CEO & UMKM</h2>
+        <p><strong>Nama:</strong> Dinar Jhonata</p>
+        <p><strong>Alamat:</strong> Jl. Lapang Tembak Selatan, Cimahi Tengah</p>
+        <p><strong>Visi:</strong> Menjadi pilihan utama camilan sehat berbasis jagung manis lokal di Cimahi dan sekitarnya.</p>
+        <p><strong>Misi:</strong> Memberikan camilan sehat, hangat, dan praktis kepada masyarakat dengan harga terjangkau.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="card">
+      <h2>Menu Jasuke Maz D</h2>
+      <div class="products" id="product-list">
+        <!-- Produk akan dimuat lewat JS -->
+      </div>
+      <div class="cart">
+        <h3>Keranjang Belanja</h3>
+        <ul id="cart-list"></ul>
+        <p class="total-price">Total: Rp <span id="total">0</span></p>
+        <button class="checkout-btn" onclick="checkout()">Checkout Sekarang</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontak">
+    <div class="card kontak">
+      <h2>Kontak Kami</h2>
+      <p>Instagram: <a href="https://instagram.com/jasukemazd" target="_blank">@jasukemazd</a></p>
+      <p>WhatsApp: <a href="https://wa.me/6285769033135" target="_blank">0857-6903-3135</a></p>
+      <p>Lokasi Booth Harian: Cimahi Tengah</p>
+    </div>
+  </section>
+
+  <!-- Modal pembayaran -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal">
+      <h3>Pilih Metode Pembayaran</h3>
+      <label class="payment-option"><input type="radio" name="pay" value="Cash" checked /> Cash (Bayar di tempat)</label>
+      <label class="payment-option"><input type="radio" name="pay" value="E-Wallet" /> E-Wallet (Dana, Gopay)</label>
+      <label class="payment-option"><input type="radio" name="pay" value="Transfer Bank" /> Transfer Bank</label>
+      <p id="totalPaymentText" style="font-weight: 700; margin-top: 15px;"></p>
+      <button onclick="confirmPay()">Konfirmasi Pembayaran</button>
+    </div>
+  </div>
+  <script>
+    // Data produk
+    const products = [
+      { id: 1, name: "Jasuke Original", price: 7000, img: "https://via.placeholder.com/300x160?text=Jasuke+Original" },
+      { id: 2, name: "Jasuke Milo", price: 10000, img: "https://via.placeholder.com/300x160?text=Jasuke+Milo" },
+      { id: 3, name: "Jasuke Coklat Keju", price: 12000, img: "https://via.placeholder.com/300x160?text=Coklat+Keju" },
+      { id: 4, name: "Bundling 3 Cup", price: 35000, img: "https://via.placeholder.com/300x160?text=Bundling+3+Cup" }
+    ];
+
+    const productList = document.getElementById('product-list');
+    const cartList = document.getElementById('cart-list');
+    const totalElem = document.getElementById('total');
+    const paymentModal = document.getElementById('paymentModal');
+    const totalPaymentText = document.getElementById('totalPaymentText');
+
+    let cart = [];
+
+    function renderProducts() {
+      productList.innerHTML = '';
+      products.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.name}" />
+          <h3>${p.name}</h3>
+          <p>Rp ${p.price.toLocaleString()}</p>
+          <button onclick="addToCart(${p.id})">Beli</button>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      cart.push(product);
+      updateCart();
+    }
+
+    function updateCart() {
+      cartList.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, i) => {
+        total += item.price;
+        const li = document.createElement('li');
+        li.innerHTML = `${item.name} - Rp ${item.price.toLocaleString()} <button onclick="removeFromCart(${i})">Hapus</button>`;
+        cartList.appendChild(li);
+      });
+      totalElem.textContent = total.toLocaleString();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Keranjang kosong! Silakan pilih produk terlebih dahulu.");
+        return;
+      }
+      const totalPayment = cart.reduce((sum, item) => sum + item.price, 0);
+      totalPaymentText.textContent = `Total: Rp ${totalPayment.toLocaleString()}`;
+      paymentModal.style.display = 'flex';
+    }
+
+    function confirmPay() {
+      const method = document.querySelector('input[name="pay"]:checked').value;
+      const totalPayment = cart.reduce((sum, item) => sum + item.price, 0);
+      let message = '';
+      switch (method) {
+        case 'Cash':
+          message = `Anda memilih pembayaran Cash.\nSilahkan bayar saat pengantaran.\nTotal: Rp ${totalPayment.toLocaleString()}`;
+          break;
+        case 'E-Wallet':
+          message = `Anda memilih pembayaran E-Wallet.\nSilahkan transfer ke Dana/Gopay:\nNo: 0857-6903-3135\nAtas Nama: Dinar Jhonata\nTotal: Rp ${totalPayment.toLocaleString()}`;
+          break;
+        case 'Transfer Bank':
+          message = `Anda memilih pembayaran Transfer Bank.\nSilahkan transfer ke:\nBank BCA\nNo Rek: 1234567890\nAtas Nama: Dinar Jhonata\nTotal: Rp ${totalPayment.toLocaleString()}`;
+          break;
+      }
+      alert(message + "\n\nTerima kasih sudah memesan Jasuke Maz D!");
+      cart = [];
+      updateCart();
+      paymentModal.style.display = 'none';
+    }
+
+    paymentModal.addEventListener('click', e => {
+      if (e.target === paymentModal) {
+        paymentModal.style.display = 'none';
+      }
+    });
+
+    // Navigasi + Fullscreen saat klik pertama
+    let fullscreenTriggered = false;
+    function requestFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+
+    function showSection(id) {
+      if (!fullscreenTriggered) {
+        requestFullscreen();
+        fullscreenTriggered = true;
+      }
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    // Inisialisasi
+    renderProducts();
+    showSection('home');
+  </script>
+</body>
+</html>
